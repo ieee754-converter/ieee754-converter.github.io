@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding IEEE 754</title>
+    <style>
+        body {
+            background-color: #f7f7d9; /* Fondo de la ventana */
+            margin: 0;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            color: #34495e;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Alineación desde la parte superior */
+            height: 100vh;
+            text-align: left;
+            overflow-y: auto; /* Asegura que el contenido se pueda desplazar */
+        }
+        .content {
+            max-width: 1200px; /* Para que no se estire demasiado en pantallas grandes */
+            width: 100%;
+            padding: 20px;
+            background-color: #f7f7d9; /* Fondo igual que la ventana */
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            overflow-y: auto; /* Para que pueda scrollear dentro del contenido */
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        p {
+            margin-top: 0px;
+            margin-bottom: 15px;
+        }
+        a {
+            color: rgb(38, 45, 133);
+            text-decoration: none;
+        }
+        img {
+            width: 100%; /* Asegura que las imágenes no sobrepasen el ancho */
+            height: auto;
+            max-width: 800px; /* Define un tamaño máximo */
+            margin: 10px 0; /* Agrega espacio alrededor de las imágenes */
+        }
+        /* Ajustes para pantalla pequeña */
+        @media screen and (max-width: 768px) {
+            h1, h2, h3 {
+                font-size: 1.2em;
+            }
+            img {
+                max-width: 100%; /* Las imágenes se ajustan a pantallas más pequeñas */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <a href="https://ieee754-converter.github.io/index.html">Return to the main page</a>
+        <h1>What is IEEE?</h1>
+        <p>IEEE is the acronym of <b>Institute of Electrical and Electronics Engineers</b>.<br>They are a global entity responsible for drafting major and important standards. Specifically, many computing science standards are written by them.</p>
+        <h1>What is IEEE 754?</h1>
+        <p>The IEEE 754 is a standard that defines the arithmetic, representation and more rules of floating-point numbers.<br>In this site we will focus on the rules to convert a fractional number from classic notation into a binary sequence that a computer can <b>store and read</b>.<br>This conversion is not easy: a short number in decimal base can have a <b>massive number of fractional digits</b> in binary notation.<br><br>That situation requires a smart way to do the conversion that combines two things:<br>1. A <b>short sequence of numbers</b> to avoid filling too much disk space.<br>2. Maintaining a <b>high accuracy</b> of the original number.<br><br>This standard provides us two different precisions: one of 32 bits (<b>simple precision</b>) and another of 64 bits (<b>double precision</b>).</p>
+        <h1>How to make this conversion?</h1>
+        <p>From here on, we will introduce an informal explanation of the conversion. It does not cover all the standard details, but it is very illustrative to <b>understand how it works</b>.</p>
+        <h2>Sections of an IEEE 754 number</h2>
+        <img src="./images/ACCURACIES.png" alt="Both accuracies">
+        <h3>Sign bit</h3>
+        <p>The first bit appears in both precisions. It is very simple to understand: if this bit is '0', the represented number is <b>positive</b>, and if it is '1', the number is <b>negative</b>.</p>
+        <h3>Biased exponent</h3>
+        <p>This section has 8 bits in simple precision and 11 bits in double precision. This group of bits tells us <b>how many times the decimal point was shifted</b> and in which direction.<br>It is very common to name this section only "exponent".<br>We will cover more about this in the next section.</p>
+        <h3>Significand</h3>
+        <p>This is a group of 23 bits in simple precision and 52 bits in double precision.<br>It contains the <b>basic information</b> of the original number.<br>We will cover more in the next section as well.</p>
+        <h3>Notes about the notation</h3>
+        <p>Before the publication of this standard, floating-point numbers already existed and the community used the word <b>"characteristic"</b> to refer to the "biased exponent" and <b>"mantissa"</b> to refer to the "significand".<br>Although IEEE does not use those words, they appear in many websites and books, that's why <b>you should know and not confuse them</b>.</p>
+        <h2>Instructions</h2>
+        <h3>Step 1: Convert the number to the binary base</h3>
+        <p>The first step is to calculate the representation of the <b>number in binary</b>. If your original number is in a numerical base that is a multiple of 2 (e.g., octal, hexadecimal...), you can convert it digit by digit.</p>
+        <img src="./images/binary.png" alt="Binary conversion">
+        <h3>Step 2: Shift the point</h3>
+        <p>Once you have the binary representation, you should <b>shift your point to a position where you only have one '1' at the left</b> and the rest of the number on the right side.<br>The first bit after your point is the first bit of your significand. Now, you should take the correct amount of bits after that bit (23 or 52, depending on precision). They all are the <b>significand</b>.<br>If your binary number has more bits than you need, you should perform rounding (it will be explained later).<br><br>Note that by shifting the point, you have altered the number, so you must balance it with a multiplication. How? Simple, multiply the number by <b>2 to the power of the times you shifted the point.</b><br>If the shifting was to the left, the exponent will be positive, otherwise, it will be negative. This number is the <b>exponent</b>.</p>
+        <img src="./images/shifting.png" alt="Shifting example">
+        <h3>Step 3: Add the bias</h3>
+        <p>At this point, we have the significand and the exponent. However, we need the biased exponent. To get it, you only have to add a bias, 127 in case of simple precision and 1023 in case of double.<br>The reason is <b>to avoid negative exponents</b>.</p>
+        <img src="./images/biased.png" alt="Biased Exponent">
+        <p><b>Make sure you are using the correct number of bits.</b></p>
+        <h3>Step 4: Mix them all</h3>
+        <p>We are finishing the process. We have the significand and the biased exponent. Now, we only need the sign bit, which is the easiest to determine. If your number is positive: '0', otherwise: '1'.<br>Then, arrange all the parts in the correct order, and that's it. Since the number of bits is a multiple of 4, you can group them in sets of 4 and convert it to hexadecimal easily.</p>
+        <img src="./images/result.png" alt="Simple and Double Precision">
+        <p><br>Now, it's time to <a href="https://ieee754-converter.github.io/index.html">check it!</a></p>
+        <h2>Extra Knowledge</h2>
+        <h3>Rounding</h3>
+        <p>When we extract our significand but there are more bits that do not fit, we need to perform rounding.<br>One rounding method is to add 1 to the significand if the following conditions are met:<br>1- The first extra bit must be '1'.<br>2- Either there is another '1' bit among the extra bits OR the last stored significand bit is '1'.<br><br>If we want to perform rounding but the significand is all '1's, we must add 1 to the biased exponent and reset the significand to '0's.</p>
+    </div>
+</body>
+</html>
