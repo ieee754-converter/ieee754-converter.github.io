@@ -124,11 +124,12 @@
         <h2 id="rounding">Rounding methods</h2>
         <p>When we extract our significand but there are more bits that do not fit, we need to perform rounding.
         <h3 id="roundTiesToEven">roundTiesToEven</h3>
-	<p>The most used method is <b>roundTiesToEven</b>, which consists of adding 1 to the significand if the two following conditions are met:<br>1- The first extra bit must be '1'.<br>2- Either there is another '1' bit among the extra bits OR the last stored significand bit is '1'.<br><br>If we want to add 1 but the significand is all '1's, we must add 1 to the biased exponent and reset the significand to '0's.</p>
+		<p>The most used method is <b>roundTiesToEven</b>, which consists of adding 1 to the significand if <b>ONE</b> of the two following conditions are met:<br>1- The first extra bit is '1' and there is, at least, another '1' among the rest of the extra bits.<br>2- The last stored bit (in the significand) is '1' and there is another '1' among the extra bits..<br><br>If we want to add 1 but the significand is all '1's, we must add 1 to the biased exponent and reset the significand to '0's.</p>
         <h3 id="roundTiesToAway">roundTiesToAway</h3>
-	<p>Another very used method is named <b>roundTiesToAway</b>, which consists of adding (or substract) 1 to the significand if the following conditions are met:<br>1- The first extra bit must be '1' and <b>ALL THE OTHERS EXTRA BITS</b> must be '0'.<br>2- If the number is positive: you must add 1, if it is negative: you must substract 1.<br><br>If we want to add [substract] 1 but the significand is all '1's, we must add [substract] 1 to the biased exponent and reset the significand to '0's.</p>
+		<p>Another very used method is named <b>roundTiesToAway</b>, which consists of adding (or substract) 1 to the significand if the following conditions are met:<br>1- The first extra bit must be '1' and <b>ALL THE OTHERS EXTRA BITS</b> must be '0'.<br>2- If the number is positive: you must add 1, if it is negative: you must substract 1.<br><br>If we want to add [substract] 1 but the significand is all '1's, we must add [substract] 1 to the biased exponent and reset the significand to '0's.</p>
         <br>
         <a href="https://ieee754-converter.github.io/index.html">Return to the main page</a>
     </div>
 </body>
 </html>
+
