@@ -124,7 +124,7 @@
         <h2 id="rounding">Rounding methods</h2>
         <p>When we extract our significand but there are more bits that do not fit, we need to perform rounding.
         <h3 id="roundTiesToEven">roundTiesToEven</h3>
-		<p>The most used method is <b>roundTiesToEven</b>, which consists of adding 1 to the significand if <b>ONE</b> of the two following conditions are met:<br>1- The first extra bit is '1' and there is, at least, another '1' among the rest of the extra bits.<br>2- The first extra bit is '1' and the last stored bit (in the significand) is '1' as well.<br>Examples: 3.51 will be 4, 3.50 will be 4 (3 is odd), -4.51 will be -5, -2.49 will be -2 and -2.5 wil be -2 (2 is even).<br></p>
+		<p>The most used method is <b>roundTiesToEven</b>, which consists of adding 1 to the significand if <b>ONE</b> of the two following conditions are met:<br>1- The first extra bit is '1' and there is at least one other '1' among the rest of the extra bits.<br>2- The first extra bit is '1' and the last stored bit (in the significand) is '1' as well.<br>Examples: 3.51 will be 4, 3.50 will be 4 (3 is odd), -4.51 will be -5, -2.49 will be -2 and -2.5 wil be -2 (2 is even).<br></p>
         <h4>Explanation</h4>
 		<p>From a point of view in decimal base, we will add 1 to the integer part (it is the significand) if the decimal part is greather than 0.5, but if it is equal to 0.5, we will add 1 if the integer part is odd.</p>
 		<h3 id="roundTiesToAway">roundTiesToAway (from zero)</h3>
@@ -137,6 +137,7 @@
     </div>
 </body>
 </html>
+
 
 
 
