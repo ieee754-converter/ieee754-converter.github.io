@@ -120,23 +120,24 @@
         <h3 id="step4">Step 4: Mix them all</h3>
         <p>We are finishing the process. We have the significand and the biased exponent. Now, we only need the sign bit, which is the easiest to determine. If your number is positive: '0', otherwise: '1'.<br>Then, arrange all the parts in the correct order, and that's it. Since your IEEE754 number is in binary base, you can easily convert it to any other numerical base that is a power of 2. Since you will have 32 or 64 bits, it is very common to group the bits in sets of 4 and to convert them to hexadecimal (base 16 = 2^4).</p>
         <img src="./images/result.png" alt="Simple and Double Precision">
-        <p><br>Now, it's time to <a href="https://ieee754-converter.github.io/index.html">check it!</a></p>
+        <br>
         <h2 id="rounding">Rounding methods</h2>
         <p>When we extract our significand but there are more bits that do not fit, we need to perform rounding.
         <h3 id="roundTiesToEven">roundTiesToEven</h3>
-		<p>The most used method is <b>roundTiesToEven</b>, which consists of adding 1 to the significand if <b>ONE</b> of the two following conditions are met:<br>1- The first extra bit is '1' and there is, at least, another '1' among the rest of the extra bits.<br>2- The first extra bit is '1' and the last stored bit (in the significand) is '1' as well.<br></p>
-        <p><h4>Explanation</h4>
-		From a point of view in decimal base, we will add 1 if the decimal part is greather than 0.5 but if it is equal to 0.5, we will add 1 if the integer part is odd.</p>
+		<p>The most used method is <b>roundTiesToEven</b>, which consists of adding 1 to the significand if <b>ONE</b> of the two following conditions are met:<br>1- The first extra bit is '1' and there is, at least, another '1' among the rest of the extra bits.<br>2- The first extra bit is '1' and the last stored bit (in the significand) is '1' as well.<br>Examples: 3.51 will be 4, 3.50 will be 4 (3 is odd), -4.51 will be -5, -2.49 will be -2 and -2.5 wil be -2 (2 is even).<br></p>
+        <h4>Explanation</h4>
+		<p>From a point of view in decimal base, we will add 1 to the integer part (it is the significand) if the decimal part is greather than 0.5, but if it is equal to 0.5, we will add 1 if the integer part is odd.</p>
 		<h3 id="roundTiesToAway">roundTiesToAway (from zero)</h3>
 		<p>Another very used method is named <b>roundTiesToAway</b>, which consists of adding 1 to the significand if the following condition is met:<br>1- The first extra bit is '1'.</p>
-		<p><h4>Explanation</h4>
-		From a point of view in decimal base, we will add 1 to the integer part if the decimal part is greather or equal to 0.5.<br>Examples: 3.5 will be 4, 3.65 will be 4, -4.51 will be -5 and -2.49 will be -2.</p>
-		<p><br><br>About the previous methods: if we want to add [substract] 1 but the significand is all '1's, we must add [substract] 1 to the biased exponent and reset the significand to '0's.</p>
+		<h4>Explanation</h4>
+		<p>From a point of view in decimal base, we will add 1 to the integer part (it is the significand) if the decimal part is greather or equal to 0.5.<br>Examples: 3.5 will be 4, 3.65 will be 4, -4.51 will be -5 and -2.49 will be -2.<br></p>
+		<p>About the previous methods: if we want to add [substract] 1 but the significand is all '1's, we must add [substract] 1 to the biased exponent and reset the significand to '0's.</p>
         <br>
-        <a href="https://ieee754-converter.github.io/index.html">Return to the main page</a>
+        <p>Now, it's time to <a href="https://ieee754-converter.github.io/index.html">check it!</a></p>
     </div>
 </body>
 </html>
+
 
 
 
